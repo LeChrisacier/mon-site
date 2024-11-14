@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annonce Lechevallier Durocher</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+            font-family: 'MedievalSharp', sans-serif;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-4.png');
+            background-size: cover;
+            background-repeat: repeat;
+            flex-direction: row;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Animation pour le texte d'intro */
+        #intro-text {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #333;
+            padding: 20px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            max-width: 80%;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeIn 2s forwards; /* Animation fade-in */
+            animation-delay: 1s; /* Début après 1s */
+        }
+
+        /* Animation pour l'image du drapeau */
+        #intro-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s forwards; /* Animation fade-in */
+            animation-delay: 3s; /* Début après 3s */
+        }
+
+        #intro-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Styles restants */
+        video#background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        video#announcement-video {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 45%;
+            height: 70%;
+            transform: translateY(-50%);
+            display: none;
+            z-index: 1;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+        }
+
+        #announcement-text {
+            display: none;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 20px;
+            max-width: 50%;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: fadeIn 3s 2s forwards;
+        }
+
+        #pause-play-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <video id="background-video" autoplay loop muted>
+        <source src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/arbre.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo de fond.
+    </video>
+
+    <div id="intro-container">
+        <div id="intro-text">
+            Bienvenue à vous, pouvez-vous commencer à lire notre annonce ? <a onclick="startAnnouncement()" href="#">Cliquez ici</a>
+        </div>
+
+        <div id="intro-image">
+            <img src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/Drapeau_embleme.png" alt="Image d'Annonce">
+        </div>
+    </div>
+
+    <video id="announcement-video" autoplay muted loop>
+        <source src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/Video_Robin.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo d'annonce.
+    </video>
+
+    <div id="announcement-text">
+        <span>Mes trés cheres amis,</span><br />
+        Les oracles sont formels : <br />
+        le clan Lechevallier Durocher <br />
+        s’apprête à accueillir un nouvel héritier.<br />
+        Nous, Chris et Bérengère Lechevallier Durocher, <br />
+        déjà comblés par notre cher Arthur, <br />
+        attendons avec espoir et félicité l’arrivée de cet être <br />
+        qui viendra enrichir notre foyer en Mai de l’an 2025.<br />
+        Que cette annonce emplisse vos cœurs de bonheur <br />
+        comme elle emplit le nôtre, <br />
+        et que la joie accompagne nos familles<br />
+        unies en ce doux moment.<br />
+        En toute amitié et affection sincère,<br /><br />
+        Le Clan Lechevallier Durocher.
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas la musique de fond.
+    </audio>
+
+    <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
+
+    <script>
+        var music = document.getElementById("background-music");
+        var pausePlayButton = document.getElementById("pause-play-button");
+        var isPlaying = false;
+
+        function startAnnouncement() {
+            document.getElementById("intro-container").style.display = "none";
+            var announcementText = document.getElementById("announcement-text");
+            announcementText.style.display = "block";
+
+            music.play().catch(error => {
+                console.log("Erreur de lecture de la musique:", error);
+            });
+            isPlaying = true;
+            pausePlayButton.textContent = "Pause";
+
+            setTimeout(function() {
+                var announcementVideo = document.getElementById("announcement-video");
+                announcementVideo.style.display = "block";
+            }, 15000);
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                pausePlayButton.textContent = "Play";
+            } else {
+                music.play().catch(error => {
+                    console.log("Erreur de lecture de la musique:", error);
+                });
+                pausePlayButton.textContent = "Pause";
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+
+</body>
+</html>
