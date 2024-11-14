@@ -123,8 +123,9 @@
 </head>
 <body>
 
+    <!-- Vidéo de fond -->
     <video id="background-video" autoplay loop muted>
-        <source src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/arbre.mp4" type="video/mp4">
+        <source src="assets/arbre.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la vidéo de fond.
     </video>
 
@@ -134,17 +135,18 @@
         </div>
 
         <div id="intro-image">
-            <img src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/Drapeau_embleme.png" alt="Image d'Annonce">
+            <img src="assets/Drapeau_embleme.png" alt="Image d'Annonce">
         </div>
     </div>
 
+    <!-- Vidéo de l'annonce -->
     <video id="announcement-video" autoplay muted loop>
-        <source src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/Video_Robin.mp4" type="video/mp4">
+        <source src="assets/Video_Robin.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la vidéo d'annonce.
     </video>
 
     <div id="announcement-text">
-        <span>Mes trés cheres amis,</span><br />
+        <span>Mes trés chers amis,</span><br />
         Les oracles sont formels : <br />
         le clan Lechevallier Durocher <br />
         s’apprête à accueillir un nouvel héritier.<br />
@@ -160,11 +162,13 @@
         Le Clan Lechevallier Durocher.
     </div>
 
+    <!-- Musique de fond -->
     <audio id="background-music" loop>
-        <source src="C:/Users/windows/Desktop/HUE/Annonce Bebe/assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
+        <source src="assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas la musique de fond.
     </audio>
 
+    <!-- Bouton de pause/lecture de la musique -->
     <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
 
     <script>
