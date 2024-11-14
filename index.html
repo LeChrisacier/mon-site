@@ -21,7 +21,6 @@
             background-repeat: repeat;
             flex-direction: column;
             text-align: center;
-            height: 100vh;
         }
 
         @keyframes fadeIn {
@@ -29,21 +28,23 @@
             100% { opacity: 1; }
         }
 
+        /* Animation pour le texte d'intro */
         #intro-text {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #333;
             padding: 20px;
             font-weight: bold;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
-            max-width: 90%;
-            margin: 10px auto;
+            max-width: 80%;
+            margin: auto;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             opacity: 0;
             animation: fadeIn 2s forwards;
             animation-delay: 1s;
         }
 
+        /* Animation pour l'image du drapeau */
         #intro-image {
             margin-top: 20px;
             opacity: 0;
@@ -58,6 +59,7 @@
             margin: 0 auto;
         }
 
+        /* Styles pour le fond vidéo */
         video#background-video {
             position: fixed;
             top: 0;
@@ -68,12 +70,13 @@
             z-index: -1;
         }
 
+        /* Vidéo d'annonce */
         video#announcement-video {
             position: absolute;
             top: 50%;
             right: 0;
-            width: 80%;
-            height: auto;
+            width: 45%;
+            height: 70%;
             transform: translateY(-50%);
             display: none;
             z-index: 1;
@@ -82,12 +85,13 @@
             animation: fadeIn 3s forwards;
         }
 
+        /* Texte de l'annonce */
         #announcement-text {
             display: none;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             text-align: center;
             padding: 20px;
-            max-width: 90%;
+            max-width: 80%;
             color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
@@ -99,6 +103,7 @@
             animation: fadeIn 3s 2s forwards;
         }
 
+        /* Bouton de pause/play de la musique */
         #pause-play-button {
             position: absolute;
             bottom: 20px;
@@ -114,68 +119,45 @@
             z-index: 2;
         }
 
-        /* Styles Responsifs */
+        /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
-            body {
-                justify-content: flex-start;
-            }
-
-            #intro-text {
-                font-size: 1rem;
-                padding: 15px;
-                max-width: 85%;
-            }
-
             #announcement-text {
                 font-size: 1rem;
                 padding: 15px;
-                max-width: 85%;
+                max-width: 90%;
             }
 
-            video#announcement-video {
-                width: 100%;
-                height: auto;
-                margin-top: 20px;
-            }
-
-            #pause-play-button {
-                bottom: 10px;
-                left: 10px;
-                font-size: 0.9rem;
-                padding: 8px 15px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
             #intro-text {
-                font-size: 0.9rem;
-                padding: 10px;
-                max-width: 80%;
+                font-size: 1.2rem;
+                padding: 15px;
+                max-width: 90%;
             }
 
-            #announcement-text {
-                font-size: 0.9rem;
-                padding: 10px;
-                max-width: 80%;
-            }
-
-            video#announcement-video {
-                width: 100%;
+            #announcement-video {
+                width: 70%;
                 height: auto;
-                margin-top: 20px;
+                top: 30%;
+                right: 0;
+                left: 0;
+                margin: 0 auto;
             }
 
-            #pause-play-button {
-                bottom: 10px;
-                left: 10px;
-                font-size: 0.8rem;
-                padding: 6px 12px;
+            /* Ajuster la taille des vidéos et images */
+            video#background-video {
+                height: 100%;
+                width: 100%;
+            }
+
+            #intro-image img {
+                max-width: 80%;
             }
         }
+
     </style>
 </head>
 <body>
 
+    <!-- Vidéo de fond -->
     <video id="background-video" autoplay loop muted>
         <source src="assets/arbre.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la vidéo de fond.
@@ -191,6 +173,7 @@
         </div>
     </div>
 
+    <!-- Vidéo d'annonce -->
     <video id="announcement-video" autoplay muted loop>
         <source src="assets/Video_Robin.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la vidéo d'annonce.
@@ -213,6 +196,7 @@
         Le Clan Lechevallier Durocher.
     </div>
 
+    <!-- Musique de fond -->
     <audio id="background-music" loop>
         <source src="assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas la musique de fond.
@@ -253,6 +237,12 @@
                 pausePlayButton.textContent = "Pause";
             }
             isPlaying = !isPlaying;
+        }
+
+        // Activer la version ordinateur sur mobile par défaut
+        if (window.innerWidth <= 768) {
+            // Logique pour activer la version ordinateur par défaut
+            document.body.classList.add('desktop-version');
         }
     </script>
 
