@@ -9,7 +9,6 @@
         body {
             margin: 0;
             padding: 0;
-            overflow-y: auto; /* Permet le scroll si nécessaire */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,6 +19,8 @@
             background-image: url('https://www.transparenttextures.com/patterns/paper-4.png');
             background-size: cover;
             background-repeat: repeat;
+            overflow-y: auto; /* Ajout de l'ascenseur si nécessaire */
+            height: 100vh; /* Assure que la page occupe tout l'écran */
         }
 
         @keyframes fadeIn {
@@ -259,11 +260,11 @@
         // Fonction pour activer le plein écran
         function toggleFullscreen() {
             var video = document.getElementById("announcement-video");
-            if (video.requestFullscreen) {
+            if (video.requestFullscreen) { // Standard
                 video.requestFullscreen();
             } else if (video.mozRequestFullScreen) { // Firefox
                 video.mozRequestFullScreen();
-            } else if (video.webkitRequestFullscreen) { // Chrome, Safari et Opera
+            } else if (video.webkitRequestFullscreen) { // Chrome, Safari, Opera
                 video.webkitRequestFullscreen();
             } else if (video.msRequestFullscreen) { // IE/Edge
                 video.msRequestFullscreen();
