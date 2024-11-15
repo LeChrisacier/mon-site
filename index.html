@@ -9,18 +9,18 @@
         body {
             margin: 0;
             padding: 0;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            text-align: center;
+            height: 100vh;
             color: #ffffff;
             font-family: 'MedievalSharp', sans-serif;
             background-image: url('https://www.transparenttextures.com/patterns/paper-4.png');
             background-size: cover;
             background-repeat: repeat;
-            overflow-y: auto;
-            height: 100vh;
+            flex-direction: column;
+            text-align: center;
         }
 
         @keyframes fadeIn {
@@ -59,7 +59,7 @@
             margin: 0 auto;
         }
 
-        /* Styles pour la vidéo de fond */
+        /* Styles pour le fond vidéo */
         video#background-video {
             position: fixed;
             top: 0;
@@ -70,59 +70,40 @@
             z-index: -1;
         }
 
+        /* Texte de l'annonce */
+        #announcement-text {
+            display: none;
+            font-size: 1.5rem; /* même taille que #intro-text */
+            color: #ffffff;
+            white-space: normal;
+            overflow: hidden;
+            padding: 20px;
+            max-width: 80%;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* pour plus de lisibilité */
+            border-radius: 10px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+            margin-bottom: 20px;
+        }
+
         /* Vidéo d'annonce */
-        video#announcement-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: auto;
-            display: none;  /* Masquer la vidéo par défaut */
-            z-index: 1;
+        #announcement-video {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
             object-fit: cover;
             opacity: 0;
             animation: fadeIn 3s forwards;
         }
 
-        /* Texte de l'annonce */
-        #announcement-text {
-            display: none;
-            font-size: 2rem; /* Agrandissement de la police */
-            text-align: center;
-            padding: 20px;
-            max-width: 80%;
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            opacity: 0;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: fadeIn 3s 2s forwards;
-        }
-
-        /* Bouton pour afficher la vidéo */
-        #play-video-button {
-            position: absolute;
-            top: 20px;
-            padding: 15px 25px;
-            font-size: 1.5rem;
-            font-family: 'MedievalSharp', sans-serif;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            z-index: 2;
-        }
-
-        /* Bouton pour le plein écran */
-        #fullscreen-button {
+        /* Bouton de pause/play de la musique */
+        #pause-play-button {
             position: absolute;
             bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 20px;
             padding: 10px 20px;
             font-size: 1rem;
             font-family: 'MedievalSharp', sans-serif;
@@ -136,37 +117,21 @@
 
         /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
-            #announcement-text {
-                font-size: 1.5rem;
-                padding: 15px;
-                max-width: 90%;
-            }
-
-            #intro-text {
+            #announcement-text, #intro-text {
                 font-size: 1.2rem;
                 padding: 15px;
                 max-width: 90%;
             }
 
             #announcement-video {
-                width: 100%;
+                width: 90%;
                 height: auto;
-                top: 30%;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            /* Ajuster la taille des vidéos et images */
-            video#background-video {
-                height: 100%;
-                width: 100%;
             }
 
             #intro-image img {
                 max-width: 80%;
             }
         }
-
     </style>
 </head>
 <body>
@@ -180,7 +145,8 @@
     <div id="intro-container">
         <div id="intro-text">
             Bienvenue à vous, pouvez-vous commencer à lire notre annonce ? <br />
-            PS Si vous utilisez un smartphone, placez votre téléphone en format paysage avant de <br /><a onclick="startAnnouncement()" href="#">Cliquez ici</a>
+            PS : Si vous utilisez un smartphone, placez votre téléphone en format paysage avant de <br />
+            <a onclick="startAnnouncement()" href="#">Cliquez ici</a>
         </div>
 
         <div id="intro-image">
@@ -188,33 +154,30 @@
         </div>
     </div>
 
-    <!-- Bouton pour afficher la vidéo -->
-    <button id="play-video-button" onclick="startAnnouncement()">Afficher la vidéo</button>
+    <div id="announcement-container" style="display: none;">
+        <div id="announcement-text">
+            <span>Mes très chers amis,</span><br />
+            Les oracles sont formels : <br />
+            le clan Lechevallier Durocher <br />
+            s’apprête à accueillir un nouvel héritier.<br />
+            Nous, Chris et Bérengère Lechevallier Durocher, <br />
+            déjà comblés par notre cher Arthur, <br />
+            attendons avec espoir et félicité l’arrivée de cet être <br />
+            qui viendra enrichir notre foyer en Mai de l’an 2025.<br />
+            Que cette annonce emplisse vos cœurs de bonheur <br />
+            comme elle emplit le nôtre, <br />
+            et que la joie accompagne nos familles<br />
+            unies en ce doux moment.<br />
+            En toute amitié et affection sincère,<br /><br />
+            Le Clan Lechevallier Durocher.
+        </div>
 
-    <!-- Vidéo d'annonce -->
-    <video id="announcement-video" autoplay muted loop>
-        <source src="assets/Video_Robin.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la vidéo d'annonce.
-    </video>
-
-    <div id="announcement-text">
-        <span>Mes trés chers amis,</span><br />
-        Les oracles sont formels : <br />
-        le clan Lechevallier Durocher <br />
-        s’apprête à accueillir un nouvel héritier.<br />
-        Nous, Chris et Bérengère Lechevallier Durocher, <br />
-        déjà comblés par notre cher Arthur, <br />
-        attendons avec espoir et félicité l’arrivée de cet être <br />
-        qui viendra enrichir notre foyer en Mai de l’an 2025.<br />
-        Que cette annonce emplisse vos cœurs de bonheur <br />
-        comme elle emplit le nôtre, <br />
-        et que la joie accompagne nos familles<br />
-        unies en ce doux moment.<br />
-        En toute amitié et affection sincère,<br /><br />
-        Le Clan Lechevallier Durocher.
+        <video id="announcement-video" autoplay muted loop>
+            <source src="assets/Video_Robin.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo d'annonce.
+        </video>
     </div>
 
-    <!-- Musique de fond -->
     <audio id="background-music" loop>
         <source src="assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas la musique de fond.
@@ -229,40 +192,34 @@
 
         function startAnnouncement() {
             document.getElementById("intro-container").style.display = "none";
+            document.getElementById("announcement-container").style.display = "block";
             var announcementText = document.getElementById("announcement-text");
             announcementText.style.display = "block";
 
-            var announcementVideo = document.getElementById("announcement-video");
-            announcementVideo.style.display = "block";  // Afficher la vidéo
-
-            music.play().catch(error => console.log("Erreur de lecture de la musique: " + error));
+            music.play().catch(error => {
+                console.log("Erreur de lecture de la musique:", error);
+            });
             isPlaying = true;
-            pausePlayButton.innerHTML = "Pause";
+            pausePlayButton.textContent = "Pause";
+
+            setTimeout(function() {
+                var announcementVideo = document.getElementById("announcement-video");
+                announcementVideo.style.display = "block";
+                announcementVideo.style.opacity = "1";
+            }, 10000); // 10 secondes de délai pour afficher la vidéo
         }
 
         function toggleMusic() {
             if (isPlaying) {
                 music.pause();
-                pausePlayButton.innerHTML = "Reprendre";
+                pausePlayButton.textContent = "Play";
             } else {
-                music.play();
-                pausePlayButton.innerHTML = "Pause";
+                music.play().catch(error => {
+                    console.log("Erreur de lecture de la musique:", error);
+                });
+                pausePlayButton.textContent = "Pause";
             }
             isPlaying = !isPlaying;
-        }
-
-        // Fonction pour activer le plein écran
-        function toggleFullscreen() {
-            var video = document.getElementById("announcement-video");
-            if (video.requestFullscreen) {
-                video.requestFullscreen();
-            } else if (video.mozRequestFullScreen) {
-                video.mozRequestFullScreen();
-            } else if (video.webkitRequestFullscreen) {
-                video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) {
-                video.msRequestFullscreen();
-            }
         }
     </script>
 
