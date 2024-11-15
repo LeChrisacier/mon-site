@@ -86,11 +86,11 @@
         }
 
         /* Vidéo d'annonce */
-        video#announcement-video {
+        #announcement-video {
             display: none;
-            width: 70%;
+            width: 100%;
             max-width: 500px;
-            margin-top: 20px;
+            margin: 20px auto;
             object-fit: cover;
             opacity: 0;
             animation: fadeIn 3s forwards;
@@ -197,7 +197,7 @@
             document.getElementById("intro-container").style.display = "none";
             document.getElementById("announcement-container").style.display = "block";
             var announcementText = document.getElementById("announcement-text");
-            announcementText.style.opacity = "1";
+            announcementText.style.display = "block";
 
             music.play().catch(error => {
                 console.log("Erreur de lecture de la musique:", error);
@@ -209,7 +209,7 @@
                 var announcementVideo = document.getElementById("announcement-video");
                 announcementVideo.style.display = "block";
                 announcementVideo.style.opacity = "1";
-            }, 15000);
+            }, 3000);
         }
 
         function toggleMusic() {
