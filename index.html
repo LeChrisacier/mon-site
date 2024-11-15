@@ -19,8 +19,8 @@
             background-image: url('https://www.transparenttextures.com/patterns/paper-4.png');
             background-size: cover;
             background-repeat: repeat;
-            overflow-y: auto; /* Ajout de l'ascenseur si nécessaire */
-            height: 100vh; /* Assure que la page occupe tout l'écran */
+            overflow-y: auto;
+            height: 100vh;
         }
 
         @keyframes fadeIn {
@@ -100,6 +100,21 @@
             left: 50%;
             transform: translateX(-50%);
             animation: fadeIn 3s 2s forwards;
+        }
+
+        /* Bouton pour afficher la vidéo */
+        #play-video-button {
+            position: absolute;
+            top: 20px;
+            padding: 15px 25px;
+            font-size: 1.5rem;
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            z-index: 2;
         }
 
         /* Bouton de pause/play de la musique */
@@ -188,6 +203,9 @@
         </div>
     </div>
 
+    <!-- Bouton pour afficher la vidéo -->
+    <button id="play-video-button" onclick="startAnnouncement()">Afficher la vidéo</button>
+
     <!-- Vidéo d'annonce -->
     <video id="announcement-video" autoplay muted loop>
         <source src="assets/Video_Robin.mp4" type="video/mp4">
@@ -232,41 +250,34 @@
             var announcementText = document.getElementById("announcement-text");
             announcementText.style.display = "block";
 
-            music.play().catch(error => {
-                console.log("Erreur de lecture de la musique:", error);
-            });
-            isPlaying = true;
-            pausePlayButton.textContent = "Pause";
+            var announcementVideo = document.getElementById("announcement-video");
+            announcementVideo.style.display = "block";  // Afficher la vidéo
 
-            setTimeout(function() {
-                var announcementVideo = document.getElementById("announcement-video");
-                announcementVideo.style.display = "block";
-            }, 10000); // Attente de 10 secondes
+            music.play().catch(error => console.log("Erreur de lecture de la musique: " + error));
+            isPlaying = true;
+            pausePlayButton.innerHTML = "Pause";
         }
 
         function toggleMusic() {
             if (isPlaying) {
                 music.pause();
-                pausePlayButton.textContent = "Play";
+                pausePlayButton.innerHTML = "Reprendre";
             } else {
-                music.play().catch(error => {
-                    console.log("Erreur de lecture de la musique:", error);
-                });
-                pausePlayButton.textContent = "Pause";
+                music.play();
+                pausePlayButton.innerHTML = "Pause";
             }
             isPlaying = !isPlaying;
         }
 
-        // Fonction pour activer le plein écran
         function toggleFullscreen() {
             var video = document.getElementById("announcement-video");
-            if (video.requestFullscreen) { // Standard
+            if (video.requestFullscreen) {
                 video.requestFullscreen();
-            } else if (video.mozRequestFullScreen) { // Firefox
+            } else if (video.mozRequestFullScreen) {
                 video.mozRequestFullScreen();
-            } else if (video.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            } else if (video.webkitRequestFullscreen) {
                 video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) { // IE/Edge
+            } else if (video.msRequestFullscreen) {
                 video.msRequestFullscreen();
             }
         }
