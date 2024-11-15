@@ -131,6 +131,8 @@
             border-radius: 5px;
             z-index: 2;
             display: none; /* Caché au début */
+            opacity: 0;
+            animation: fadeIn 3s forwards; /* Animation ajoutée */
         }
 
         /* Media Queries pour mobile */
@@ -230,6 +232,7 @@
             // Afficher le bouton vidéo après 10 secondes
             setTimeout(function() {
                 boutonVideo.style.display = "block"; // Affiche le bouton de vidéo
+                boutonVideo.style.opacity = 1; // Assure que l'opacité est 1 après l'animation
             }, 10000); // 10 secondes de délai
         }
 
@@ -250,9 +253,15 @@
         function showFullScreenVideo() {
             var videoElement = document.getElementById("announcement-video");
             videoElement.style.display = "block"; // Affiche la vidéo
-            videoElement.requestFullscreen().catch(err => {
-                console.log("Erreur en mode plein écran:", err);
-            });
+            if (videoElement.requestFullscreen) {
+                videoElement.requestFullscreen();
+            } else if (videoElement.mozRequestFullScreen) { // Firefox
+                videoElement.mozRequestFullScreen();
+            } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                videoElement.webkitRequestFullscreen();
+            } else if (videoElement.msRequestFullscreen) { // IE/Edge
+                videoElement.msRequestFullscreen();
+            }
         }
     </script>
 
