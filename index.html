@@ -116,6 +116,22 @@
             z-index: 2;
         }
 
+        /* Bouton pour afficher la vidéo */
+        #bouton-video {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            z-index: 2;
+        }
+
         /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
             #announcement-text, #intro-text {
@@ -186,6 +202,9 @@
 
     <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
 
+    <!-- Bouton pour afficher la vidéo -->
+    <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
+
     <script>
         var music = document.getElementById("background-music");
         var pausePlayButton = document.getElementById("pause-play-button");
@@ -220,6 +239,15 @@
                 pausePlayButton.textContent = "Pause";
             }
             isPlaying = !isPlaying;
+        }
+
+        // Fonction pour afficher la vidéo en plein écran
+        function showFullScreenVideo() {
+            var videoElement = document.getElementById("announcement-video");
+            videoElement.style.display = "block"; // Affiche la vidéo
+            videoElement.requestFullscreen().catch(err => {
+                console.log("Erreur en mode plein écran:", err);
+            });
         }
     </script>
 
