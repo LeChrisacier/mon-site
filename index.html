@@ -88,7 +88,7 @@
             margin-bottom: 20px;
         }
 
-        /* Boutons Play et Video */
+        /* Boutons Play et Vidéo */
         #play-button, #bouton-video {
             position: fixed;
             padding: 10px 20px;
@@ -113,6 +113,20 @@
         #bouton-video {
             bottom: 20px;
             right: 20px;
+        }
+
+        /* Bouton de fermeture de la vidéo */
+        #close-video {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
         }
 
         /* Media Queries pour mobile */
@@ -183,10 +197,14 @@
     <button id="play-button" onclick="startPauseMusic()">Play</button>
     <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
 
+    <!-- Bouton de fermeture -->
+    <div id="close-video" style="display: none;" onclick="closeVideo()">×</div>
+
     <script>
         var music = document.getElementById("background-music");
         var boutonVideo = document.getElementById("bouton-video");
         var playButton = document.getElementById("play-button");
+        var closeVideoButton = document.getElementById("close-video");
 
         // Fonction pour démarrer ou mettre en pause la musique
         function startPauseMusic() {
@@ -237,13 +255,32 @@
             videoElement.style.zIndex = "9999";
             document.body.appendChild(videoElement);
 
+            // Afficher la croix pour fermer la vidéo
+            closeVideoButton.style.display = "block";
+
             // Ajouter un événement pour revenir au texte lorsque la vidéo est fermée
             videoElement.onended = function () {
                 document.body.removeChild(videoElement); // Retirer la vidéo
-                document.getElementById("announcement-container").style.display = "block"; // Afficher le texte à nouveau
-                boutonVideo.style.display = "none"; // Masquer le bouton vidéo
+                document.getElementById("announcement-container").style.display = "none"; // Cacher l'annonce
+                boutonVideo.style.display = "block"; // Réafficher le bouton vidéo
             };
         }
+
+        // Fonction pour fermer la vidéo
+        function closeVideo() {
+            var videoElement = document.querySelector("video");
+            if (videoElement) {
+                document.body.removeChild(videoElement); // Retirer la vidéo
+                document.getElementById("announcement-container").style.display = "none"; // Cacher l'annonce
+                closeVideoButton.style.display = "none"; // Cacher la croix
+                boutonVideo.style.display = "block"; // Réafficher le bouton vidéo
+            }
+        }
+
+        // Afficher le texte d'annonce lorsque la page est chargée
+        window.onload = function() {
+            setTimeout(startAnnouncement, 3000); // Commence après 3 secondes
+        };
     </script>
 
 </body>
