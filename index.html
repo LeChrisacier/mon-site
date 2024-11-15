@@ -9,17 +9,17 @@
         body {
             margin: 0;
             padding: 0;
+            overflow-y: auto; /* Permet le scroll si nécessaire */
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            text-align: center;
             color: #ffffff;
             font-family: 'MedievalSharp', sans-serif;
             background-image: url('https://www.transparenttextures.com/patterns/paper-4.png');
             background-size: cover;
             background-repeat: repeat;
-            text-align: center;
-            height: 100%;
         }
 
         @keyframes fadeIn {
@@ -27,11 +27,12 @@
             100% { opacity: 1; }
         }
 
-        #intro-text, #announcement-text {
+        /* Animation pour le texte d'intro */
+        #intro-text {
             font-size: 1.5rem;
+            color: #333;
             padding: 20px;
             font-weight: bold;
-            color: #333;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             max-width: 80%;
@@ -39,26 +40,15 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             opacity: 0;
             animation: fadeIn 2s forwards;
+            animation-delay: 1s;
         }
 
-        #announcement-text {
-            display: none;
-            font-size: 1.5rem;
-            max-width: 80%;
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            opacity: 0;
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: fadeIn 3s 10s forwards;
-        }
-
+        /* Animation pour l'image du drapeau */
         #intro-image {
             margin-top: 20px;
             opacity: 0;
-            animation: fadeIn 2s forwards 3s;
+            animation: fadeIn 2s forwards;
+            animation-delay: 3s;
         }
 
         #intro-image img {
@@ -68,44 +58,140 @@
             margin: 0 auto;
         }
 
+        /* Styles pour la vidéo de fond */
+        video#background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
         /* Vidéo d'annonce */
         video#announcement-video {
-            display: none;
-            margin-top: 20px;
-            width: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
             height: auto;
-            max-height: 70vh;
+            display: none;
             z-index: 1;
-            object-fit: contain;
+            object-fit: cover;
+            opacity: 0;
             animation: fadeIn 3s forwards;
         }
 
-        #fullscreen-button {
+        /* Texte de l'annonce */
+        #announcement-text {
             display: none;
-            margin-top: 10px;
+            font-size: 2rem; /* Agrandissement de la police */
+            text-align: center;
+            padding: 20px;
+            max-width: 80%;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeIn 3s 2s forwards;
+        }
+
+        /* Bouton de pause/play de la musique */
+        #pause-play-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
             padding: 10px 20px;
             font-size: 1rem;
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
             background-color: rgba(0, 0, 0, 0.5);
             color: #ffffff;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
             z-index: 2;
         }
+
+        /* Bouton plein écran pour la vidéo */
+        #fullscreen-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            z-index: 2;
+        }
+
+        /* Media Queries pour mobile */
+        @media screen and (max-width: 768px) {
+            #announcement-text {
+                font-size: 1.5rem;
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            #intro-text {
+                font-size: 1.2rem;
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            #announcement-video {
+                width: 100%;
+                height: auto;
+                top: 30%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            /* Ajuster la taille des vidéos et images */
+            video#background-video {
+                height: 100%;
+                width: 100%;
+            }
+
+            #intro-image img {
+                max-width: 80%;
+            }
+        }
+
     </style>
 </head>
 <body>
 
+    <!-- Vidéo de fond -->
+    <video id="background-video" autoplay loop muted>
+        <source src="assets/arbre.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo de fond.
+    </video>
+
     <div id="intro-container">
         <div id="intro-text">
             Bienvenue à vous, pouvez-vous commencer à lire notre annonce ? <br />
-            PS Si vous utilisez un smartphone, placez votre téléphone en format paysage avant de <br /><a onclick="startAnnouncement()" href="#">Cliquer ici</a>
+            PS Si vous utilisez un smartphone, placez votre téléphone en format paysage avant de <br /><a onclick="startAnnouncement()" href="#">Cliquez ici</a>
         </div>
 
         <div id="intro-image">
             <img src="assets/Drapeau_embleme.png" alt="Image d'Annonce">
         </div>
     </div>
+
+    <!-- Vidéo d'annonce -->
+    <video id="announcement-video" autoplay muted loop>
+        <source src="assets/Video_Robin.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo d'annonce.
+    </video>
 
     <div id="announcement-text">
         <span>Mes trés chers amis,</span><br />
@@ -124,39 +210,62 @@
         Le Clan Lechevallier Durocher.
     </div>
 
-    <!-- Vidéo d'annonce -->
-    <video id="announcement-video" autoplay muted loop>
-        <source src="assets/Video_Robin.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la vidéo d'annonce.
-    </video>
+    <!-- Musique de fond -->
+    <audio id="background-music" loop>
+        <source src="assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas la musique de fond.
+    </audio>
 
-    <!-- Bouton plein écran pour la vidéo -->
-    <button id="fullscreen-button" onclick="toggleFullScreen()">Plein écran</button>
+    <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
+
+    <button id="fullscreen-button" onclick="toggleFullscreen()">Plein écran</button>
 
     <script>
+        var music = document.getElementById("background-music");
+        var pausePlayButton = document.getElementById("pause-play-button");
+        var fullscreenButton = document.getElementById("fullscreen-button");
+        var isPlaying = false;
+
         function startAnnouncement() {
             document.getElementById("intro-container").style.display = "none";
             var announcementText = document.getElementById("announcement-text");
             announcementText.style.display = "block";
-            
+
+            music.play().catch(error => {
+                console.log("Erreur de lecture de la musique:", error);
+            });
+            isPlaying = true;
+            pausePlayButton.textContent = "Pause";
+
             setTimeout(function() {
                 var announcementVideo = document.getElementById("announcement-video");
                 announcementVideo.style.display = "block";
-                
-                // Afficher le bouton de plein écran
-                var fullscreenButton = document.getElementById("fullscreen-button");
-                fullscreenButton.style.display = "inline-block";
-            }, 10000); // Afficher la vidéo après 10 secondes
+            }, 10000); // Attente de 10 secondes
         }
 
-        // Fonction de plein écran
-        function toggleFullScreen() {
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                pausePlayButton.textContent = "Play";
+            } else {
+                music.play().catch(error => {
+                    console.log("Erreur de lecture de la musique:", error);
+                });
+                pausePlayButton.textContent = "Pause";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Fonction pour activer le plein écran
+        function toggleFullscreen() {
             var video = document.getElementById("announcement-video");
             if (video.requestFullscreen) {
                 video.requestFullscreen();
-            } else if (video.webkitRequestFullscreen) { // Safari
+            } else if (video.mozRequestFullScreen) { // Firefox
+                video.mozRequestFullScreen();
+            } else if (video.webkitRequestFullscreen) { // Chrome, Safari et Opera
                 video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) { // IE11
+            } else if (video.msRequestFullscreen) { // IE/Edge
                 video.msRequestFullscreen();
             }
         }
