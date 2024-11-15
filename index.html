@@ -110,8 +110,8 @@
         /* Bouton Play */
         #play-button {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            bottom: 20px;
+            left: 20px; /* Changement pour le bas à gauche */
             padding: 10px 20px;
             font-size: 1rem;
             font-family: 'MedievalSharp', sans-serif;
@@ -121,7 +121,9 @@
             border: none;
             border-radius: 5px;
             z-index: 2;
-            display: block; /* Assurez-vous que le bouton Play est visible */
+            display: none; /* Caché au début */
+            opacity: 0;
+            animation: fadeIn 3s forwards; /* Animation ajoutée */
         }
 
         /* Media Queries pour mobile */
@@ -186,7 +188,7 @@
     <button id="play-button" onclick="startAnnouncement()">Play</button>
 
     <!-- Bouton pour afficher la vidéo -->
-    <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo 🌱 </button>
+    <button id="bouton-video" onclick="showFullScreenVideo()">Regarde ici 🌱</button>
 
     <script>
         var music = document.getElementById("background-music");
@@ -203,13 +205,16 @@
                 console.log("Erreur de lecture de la musique:", error);
             });
 
-            // Cacher le bouton play après avoir cliqué
-            playButton.style.display = "none";
-
             // Afficher le bouton vidéo après 10 secondes
             setTimeout(function() {
                 boutonVideo.style.display = "block"; // Affiche le bouton de vidéo
                 boutonVideo.style.opacity = 1; // Assure que l'opacité est 1 après l'animation
+            }, 10000); // 10 secondes de délai
+
+            // Afficher le bouton play après 10 secondes aussi
+            setTimeout(function() {
+                playButton.style.display = "block"; // Affiche le bouton play
+                playButton.style.opacity = 1; // Assure que l'opacité est 1 après l'animation
             }, 10000); // 10 secondes de délai
         }
 
