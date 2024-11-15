@@ -73,13 +73,16 @@
         /* Texte de l'annonce */
         #announcement-text {
             display: none;
-            font-size: 1.5rem;
-            text-align: center;
-            padding: 20px;
-            max-width: 80%;
+            font-size: 1.5rem; /* même taille que #intro-text */
             color: #ffffff;
             white-space: normal;
             overflow: hidden;
+            padding: 20px;
+            max-width: 80%;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* pour plus de lisibilité */
+            border-radius: 10px;
+            text-align: center;
             opacity: 0;
             animation: fadeIn 3s forwards;
             margin-bottom: 20px;
@@ -114,13 +117,7 @@
 
         /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
-            #announcement-text {
-                font-size: 1rem;
-                padding: 15px;
-                max-width: 90%;
-            }
-
-            #intro-text {
+            #announcement-text, #intro-text {
                 font-size: 1.2rem;
                 padding: 15px;
                 max-width: 90%;
