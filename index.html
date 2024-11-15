@@ -88,17 +88,6 @@
             margin-bottom: 20px;
         }
 
-        /* Vidéo d'annonce */
-        #announcement-video {
-            display: none;
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-            object-fit: cover;
-            opacity: 0;
-            animation: fadeIn 3s forwards;
-        }
-
         /* Bouton de pause/play de la musique */
         #pause-play-button {
             display: none; /* caché au début */
@@ -116,19 +105,18 @@
             z-index: 2;
         }
 
-        /* Bouton pour afficher la vidéo */
+        /* Bouton pour afficher la vidéo avec image */
         #bouton-video {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-family: 'MedievalSharp', sans-serif;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #ffffff;
+            width: 60px; /* Ajustez la taille de l'image selon vos besoins */
+            height: 60px;
+            background-image: url('Pepin.png'); /* Remplacer par l'image souhaitée */
+            background-size: cover;
+            background-position: center;
             border: none;
-            border-radius: 5px;
+            cursor: pointer;
             z-index: 2;
             display: none; /* Caché au début */
             opacity: 0;
@@ -191,11 +179,6 @@
             En toute amitié et affection sincère,<br /><br />
             Le Clan Lechevallier Durocher.
         </div>
-
-        <video id="announcement-video" autoplay muted loop>
-            <source src="assets/Video_Robin.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la vidéo d'annonce.
-        </video>
     </div>
 
     <audio id="background-music" loop>
@@ -206,7 +189,7 @@
     <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
 
     <!-- Bouton pour afficher la vidéo -->
-    <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
+    <button id="bouton-video" onclick="showFullScreenVideo()"></button>
 
     <script>
         var music = document.getElementById("background-music");
@@ -251,19 +234,28 @@
 
         // Fonction pour afficher la vidéo en plein écran
         function showFullScreenVideo() {
-            var videoElement = document.getElementById("announcement-video");
-            videoElement.style.display = "block"; // Affiche la vidéo
+            var videoElement = document.createElement('video');
+            videoElement.src = 'assets/Video_Robin.mp4';
+            videoElement.autoplay = true;
+            videoElement.controls = true;
+            videoElement.style.position = "fixed";
+            videoElement.style.top = 0;
+            videoElement.style.left = 0;
+            videoElement.style.width = "100%";
+            videoElement.style.height = "100%";
+            videoElement.style.zIndex = 9999;
+            document.body.appendChild(videoElement);
+
             if (videoElement.requestFullscreen) {
                 videoElement.requestFullscreen();
-            } else if (videoElement.mozRequestFullScreen) { // Firefox
+            } else if (videoElement.mozRequestFullScreen) {
                 videoElement.mozRequestFullScreen();
-            } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            } else if (videoElement.webkitRequestFullscreen) {
                 videoElement.webkitRequestFullscreen();
-            } else if (videoElement.msRequestFullscreen) { // IE/Edge
+            } else if (videoElement.msRequestFullscreen) {
                 videoElement.msRequestFullscreen();
             }
         }
     </script>
-
 </body>
 </html>
