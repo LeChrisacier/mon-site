@@ -28,6 +28,7 @@
             100% { opacity: 1; }
         }
 
+        /* Animation pour le texte d'intro */
         #intro-text {
             font-size: 1.5rem;
             color: #333;
@@ -43,6 +44,7 @@
             animation-delay: 1s;
         }
 
+        /* Animation pour l'image du drapeau */
         #intro-image {
             margin-top: 20px;
             opacity: 0;
@@ -68,6 +70,7 @@
             z-index: -1;
         }
 
+        /* Texte de l'annonce */
         #announcement-text {
             display: none;
             font-size: 1.5rem;
@@ -88,8 +91,9 @@
         /* Vidéo d'annonce */
         #announcement-video {
             display: none;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
             object-fit: cover;
             opacity: 0;
             animation: fadeIn 3s forwards;
@@ -97,6 +101,7 @@
 
         /* Bouton de pause/play de la musique */
         #pause-play-button {
+            display: none; /* caché au début */
             position: absolute;
             bottom: 20px;
             left: 20px;
@@ -111,6 +116,7 @@
             z-index: 2;
         }
 
+        /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
             #announcement-text, #intro-text {
                 font-size: 1.2rem;
@@ -197,24 +203,10 @@
             isPlaying = true;
             pausePlayButton.textContent = "Pause";
 
+            // Afficher le bouton après 10 secondes
             setTimeout(function() {
-                var announcementVideo = document.getElementById("announcement-video");
-                announcementVideo.style.display = "block";
-                announcementVideo.style.opacity = "1";
-            }, 10000); // 10 secondes de délai pour afficher la vidéo
-
-            setTimeout(function() {
-                var announcementVideo = document.getElementById("announcement-video");
-                if (announcementVideo.requestFullscreen) {
-                    announcementVideo.requestFullscreen();
-                } else if (announcementVideo.mozRequestFullScreen) {
-                    announcementVideo.mozRequestFullScreen();
-                } else if (announcementVideo.webkitRequestFullscreen) {
-                    announcementVideo.webkitRequestFullscreen();
-                } else if (announcementVideo.msRequestFullscreen) {
-                    announcementVideo.msRequestFullscreen();
-                }
-            }, 10000); // mettre la vidéo en plein écran après 10 secondes
+                pausePlayButton.style.display = "block";
+            }, 10000); // 10 secondes de délai
         }
 
         function toggleMusic() {
