@@ -70,37 +70,30 @@
             z-index: -1;
         }
 
-        /* Vidéo d'annonce */
-        video#announcement-video {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            width: 45%;
-            height: 70%;
-            transform: translateY(-50%);
-            display: none;
-            z-index: 1;
-            object-fit: cover;
-            opacity: 0;
-            animation: fadeIn 3s forwards;
-        }
-
         /* Texte de l'annonce */
         #announcement-text {
-            display: none;
+            display: block;
             font-size: 1.5rem;
             text-align: center;
             padding: 20px;
             max-width: 80%;
             color: #ffffff;
-            white-space: nowrap;
+            white-space: normal;
             overflow: hidden;
             opacity: 0;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
             animation: fadeIn 3s 2s forwards;
+            margin-bottom: 20px;
+        }
+
+        /* Vidéo d'annonce */
+        video#announcement-video {
+            width: 70%;
+            max-width: 500px;
+            margin-top: 20px;
+            display: block;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
         }
 
         /* Bouton de pause/play de la musique */
@@ -134,12 +127,8 @@
             }
 
             #announcement-video {
-                width: 70%;
+                width: 90%;
                 height: auto;
-                top: 30%;
-                right: 0;
-                left: 0;
-                margin: 0 auto;
             }
 
             /* Ajuster la taille des vidéos et images */
@@ -152,7 +141,6 @@
                 max-width: 80%;
             }
         }
-
     </style>
 </head>
 <body>
@@ -174,12 +162,6 @@
         </div>
     </div>
 
-    <!-- Vidéo d'annonce -->
-    <video id="announcement-video" autoplay muted loop>
-        <source src="assets/Video_Robin.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la vidéo d'annonce.
-    </video>
-
     <div id="announcement-text">
         <span>Mes trés chers amis,</span><br />
         Les oracles sont formels : <br />
@@ -197,6 +179,12 @@
         Le Clan Lechevallier Durocher.
     </div>
 
+    <!-- Vidéo d'annonce placée sous le texte d'annonce -->
+    <video id="announcement-video" autoplay muted loop>
+        <source src="assets/Video_Robin.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo d'annonce.
+    </video>
+
     <!-- Musique de fond -->
     <audio id="background-music" loop>
         <source src="assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
@@ -213,7 +201,7 @@
         function startAnnouncement() {
             document.getElementById("intro-container").style.display = "none";
             var announcementText = document.getElementById("announcement-text");
-            announcementText.style.display = "block";
+            announcementText.style.opacity = "1";
 
             music.play().catch(error => {
                 console.log("Erreur de lecture de la musique:", error);
@@ -223,7 +211,7 @@
 
             setTimeout(function() {
                 var announcementVideo = document.getElementById("announcement-video");
-                announcementVideo.style.display = "block";
+                announcementVideo.style.opacity = "1";
             }, 15000);
         }
 
