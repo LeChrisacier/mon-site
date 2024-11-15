@@ -107,6 +107,23 @@
             animation: fadeIn 3s forwards; /* Animation ajoutée */
         }
 
+        /* Bouton Play */
+        #play-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            z-index: 2;
+            display: block; /* Assurez-vous que le bouton Play est visible */
+        }
+
         /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
             #announcement-text, #intro-text {
@@ -165,12 +182,16 @@
         Votre navigateur ne supporte pas la musique de fond.
     </audio>
 
+    <!-- Bouton Play -->
+    <button id="play-button" onclick="startAnnouncement()">Play</button>
+
     <!-- Bouton pour afficher la vidéo -->
-    <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
+    <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo 🌱 </button>
 
     <script>
         var music = document.getElementById("background-music");
         var boutonVideo = document.getElementById("bouton-video");
+        var playButton = document.getElementById("play-button");
 
         function startAnnouncement() {
             document.getElementById("intro-container").style.display = "none";
@@ -181,6 +202,9 @@
             music.play().catch(error => {
                 console.log("Erreur de lecture de la musique:", error);
             });
+
+            // Cacher le bouton play après avoir cliqué
+            playButton.style.display = "none";
 
             // Afficher le bouton vidéo après 10 secondes
             setTimeout(function() {
