@@ -127,6 +127,7 @@
             border-radius: 50%;
             cursor: pointer;
             z-index: 10;
+            display: none; /* Initialement cachée */
         }
 
         /* Media Queries pour mobile */
@@ -160,7 +161,7 @@
         <div id="intro-text">
             Bienvenue à vous, pouvez-vous commencer à lire notre annonce ? <br />
             PS : Si vous utilisez un smartphone, placez votre téléphone en format paysage avant de <br />
-            <a onclick="startAnnouncement()" href="#">Cliquez ici</a>
+            <a href="#" onclick="startAnnouncement()">Cliquez ici</a>
         </div>
 
         <div id="intro-image">
@@ -198,7 +199,7 @@
     <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
 
     <!-- Bouton de fermeture -->
-    <div id="close-video" style="display: none;" onclick="closeVideo()">×</div>
+    <div id="close-video" onclick="closeVideo()">×</div>
 
     <script>
         var music = document.getElementById("background-music");
@@ -252,18 +253,13 @@
             videoElement.style.left = "0";
             videoElement.style.width = "100%";
             videoElement.style.height = "100%";
-            videoElement.style.zIndex = "9999";
+            videoElement.style.zIndex = "1000";
+            videoElement.style.objectFit = "cover";
+
             document.body.appendChild(videoElement);
+            closeVideoButton.style.display = "block"; // Afficher la croix
 
-            // Afficher la croix pour fermer la vidéo
-            closeVideoButton.style.display = "block";
-
-            // Ajouter un événement pour revenir au texte lorsque la vidéo est fermée
-            videoElement.onended = function () {
-                document.body.removeChild(videoElement); // Retirer la vidéo
-                document.getElementById("announcement-container").style.display = "none"; // Cacher l'annonce
-                boutonVideo.style.display = "block"; // Réafficher le bouton vidéo
-            };
+            boutonVideo.style.display = "none"; // Cacher le bouton vidéo
         }
 
         // Fonction pour fermer la vidéo
@@ -271,7 +267,6 @@
             var videoElement = document.querySelector("video");
             if (videoElement) {
                 document.body.removeChild(videoElement); // Retirer la vidéo
-                document.getElementById("announcement-container").style.display = "none"; // Cacher l'annonce
                 closeVideoButton.style.display = "none"; // Cacher la croix
                 boutonVideo.style.display = "block"; // Réafficher le bouton vidéo
             }
