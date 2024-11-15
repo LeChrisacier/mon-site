@@ -130,6 +130,7 @@
             border: none;
             border-radius: 5px;
             z-index: 2;
+            display: none; /* Caché au début */
         }
 
         /* Media Queries pour mobile */
@@ -208,6 +209,7 @@
     <script>
         var music = document.getElementById("background-music");
         var pausePlayButton = document.getElementById("pause-play-button");
+        var boutonVideo = document.getElementById("bouton-video");
         var isPlaying = false;
 
         function startAnnouncement() {
@@ -222,9 +224,12 @@
             isPlaying = true;
             pausePlayButton.textContent = "Pause";
 
-            // Afficher le bouton après 10 secondes
+            // Afficher le bouton de pause/play immédiatement
+            pausePlayButton.style.display = "block";
+
+            // Afficher le bouton vidéo après 10 secondes
             setTimeout(function() {
-                pausePlayButton.style.display = "block";
+                boutonVideo.style.display = "block"; // Affiche le bouton de vidéo
             }, 10000); // 10 secondes de délai
         }
 
