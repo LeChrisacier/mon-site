@@ -88,12 +88,11 @@
             margin-bottom: 20px;
         }
 
-        /* Bouton de pause/play de la musique */
-        #pause-play-button {
-            display: none; /* caché au début */
-            position: absolute;
+        /* Bouton pour afficher la vidéo */
+        #bouton-video {
+            position: fixed;
             bottom: 20px;
-            left: 20px;
+            right: 20px;
             padding: 10px 20px;
             font-size: 1rem;
             font-family: 'MedievalSharp', sans-serif;
@@ -103,27 +102,9 @@
             border: none;
             border-radius: 5px;
             z-index: 2;
-        }
-
-        /* Bouton pour afficher la vidéo avec image */
-        #bouton-video {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px; /* Ajustez la taille de l'image selon vos besoins */
-            height: 60px;
-            border: none;
-            cursor: pointer;
-            z-index: 2;
             display: none; /* Caché au début */
             opacity: 0;
             animation: fadeIn 3s forwards; /* Animation ajoutée */
-        }
-
-        #bouton-video img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         /* Media Queries pour mobile */
@@ -132,11 +113,6 @@
                 font-size: 1.2rem;
                 padding: 15px;
                 max-width: 90%;
-            }
-
-            #announcement-video {
-                width: 90%;
-                height: auto;
             }
 
             #intro-image img {
@@ -189,18 +165,12 @@
         Votre navigateur ne supporte pas la musique de fond.
     </audio>
 
-    <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
-
     <!-- Bouton pour afficher la vidéo -->
-    <button id="bouton-video" onclick="showFullScreenVideo()">
-        <img src="Pepin2.png" alt="Bouton Video">
-    </button>
+    <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
 
     <script>
         var music = document.getElementById("background-music");
-        var pausePlayButton = document.getElementById("pause-play-button");
         var boutonVideo = document.getElementById("bouton-video");
-        var isPlaying = false;
 
         function startAnnouncement() {
             document.getElementById("intro-container").style.display = "none";
@@ -211,11 +181,6 @@
             music.play().catch(error => {
                 console.log("Erreur de lecture de la musique:", error);
             });
-            isPlaying = true;
-            pausePlayButton.textContent = "Pause";
-
-            // Afficher le bouton de pause/play immédiatement
-            pausePlayButton.style.display = "block";
 
             // Afficher le bouton vidéo après 10 secondes
             setTimeout(function() {
@@ -224,44 +189,27 @@
             }, 10000); // 10 secondes de délai
         }
 
-        function toggleMusic() {
-            if (isPlaying) {
-                music.pause();
-                pausePlayButton.textContent = "Play";
-            } else {
-                music.play().catch(error => {
-                    console.log("Erreur de lecture de la musique:", error);
-                });
-                pausePlayButton.textContent = "Pause";
-            }
-            isPlaying = !isPlaying;
-        }
-
         // Fonction pour afficher la vidéo en plein écran
         function showFullScreenVideo() {
-            var videoElement = document.createElement('video');
-            videoElement.src = 'assets/Video_Robin.mp4';
+            var videoElement = document.createElement("video");
+            videoElement.src = "assets/Video_Robin.mp4";
             videoElement.autoplay = true;
             videoElement.controls = true;
             videoElement.style.position = "fixed";
-            videoElement.style.top = 0;
-            videoElement.style.left = 0;
+            videoElement.style.top = "0";
+            videoElement.style.left = "0";
             videoElement.style.width = "100%";
             videoElement.style.height = "100%";
-            videoElement.style.zIndex = 9999;
+            videoElement.style.zIndex = "9999";
             document.body.appendChild(videoElement);
 
-            if (videoElement.requestFullscreen) {
-                videoElement.requestFullscreen();
-            } else if (videoElement.mozRequestFullScreen) {
-                videoElement.mozRequestFullScreen();
-            } else if (videoElement.webkitRequestFullscreen) {
-                videoElement.webkitRequestFullscreen();
-            } else if (videoElement.msRequestFullscreen) {
-                videoElement.msRequestFullscreen();
-            }
+            // Ajouter un événement pour revenir au texte lorsque la vidéo est fermée
+            videoElement.onended = function () {
+                document.body.removeChild(videoElement); // Retirer la vidéo
+                document.getElementById("announcement-container").style.display = "block"; // Afficher le texte à nouveau
+                boutonVideo.style.display = "none"; // Masquer le bouton vidéo
+            };
         }
     </script>
-
 </body>
 </html>
