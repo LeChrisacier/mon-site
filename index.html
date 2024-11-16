@@ -88,9 +88,23 @@
             margin-bottom: 20px;
         }
 
-        /* Boutons Play et Vidéo */
-        #play-button, #bouton-video {
-            position: fixed;
+        /* Vidéo d'annonce */
+        #announcement-video {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+        }
+
+        /* Bouton de pause/play de la musique */
+        #pause-play-button {
+            display: none; /* caché au début */
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
             padding: 10px 20px;
             font-size: 1rem;
             font-family: 'MedievalSharp', sans-serif;
@@ -100,49 +114,25 @@
             border: none;
             border-radius: 5px;
             z-index: 2;
-            opacity: 0;
-            transition: opacity 1s;
         }
 
-        /* Position des boutons */
-        #play-button {
-            bottom: 20px;
-            left: 20px;
-        }
-
+        /* Bouton pour afficher la vidéo */
         #bouton-video {
+            position: fixed;
             bottom: 20px;
             right: 20px;
-        }
-
-        /* Bouton de fermeture de la vidéo */
-        #close-video {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            display: none; /* Initialement cachée */
-        }
-
-        /* Bouton Retour à l'annonce */
-        #back-to-announcement {
-            position: fixed;
-            top: 20px;
-            left: 20px;
             padding: 10px 20px;
             font-size: 1rem;
-            background-color: rgba(0, 0, 0, 0.7);
+            font-family: 'MedievalSharp', sans-serif;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
             color: #ffffff;
             border: none;
             border-radius: 5px;
             z-index: 2;
-            display: none; /* Initialement caché */
+            display: none; /* Caché au début */
+            opacity: 0;
+            animation: fadeIn 3s forwards; /* Animation ajoutée */
         }
 
         /* Media Queries pour mobile */
@@ -176,7 +166,7 @@
         <div id="intro-text">
             Bienvenue à vous, pouvez-vous commencer à lire notre annonce ? <br />
             PS : Si vous utilisez un smartphone, placez votre téléphone en format paysage avant de <br />
-            <a href="#" onclick="startAnnouncement()">Cliquez ici</a>
+            <a onclick="startAnnouncement()" href="#">Cliquez ici</a>
         </div>
 
         <div id="intro-image">
@@ -201,82 +191,79 @@
             En toute amitié et affection sincère,<br /><br />
             Le Clan Lechevallier Durocher.
         </div>
+
+        <video id="announcement-video" autoplay muted loop>
+            <source src="assets/Video_Robin.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo d'annonce.
+        </video>
     </div>
 
-    <!-- Musique de fond -->
     <audio id="background-music" loop>
         <source src="assets/Musique_annonce_Bebe.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas la musique de fond.
     </audio>
 
-    <!-- Boutons Play et Vidéo -->
-    <button id="play-button" onclick="startPauseMusic()">Play</button>
+    <button id="pause-play-button" onclick="toggleMusic()">Pause</button>
+
+    <!-- Bouton pour afficher la vidéo -->
     <button id="bouton-video" onclick="showFullScreenVideo()">Afficher la vidéo</button>
-
-    <!-- Bouton de fermeture -->
-    <div id="close-video" onclick="closeVideo()">×</div>
-
-    <!-- Bouton pour revenir à l'annonce -->
-    <button id="back-to-announcement" onclick="backToAnnouncement()">Retour à l'annonce</button>
 
     <script>
         var music = document.getElementById("background-music");
+        var pausePlayButton = document.getElementById("pause-play-button");
         var boutonVideo = document.getElementById("bouton-video");
-        var playButton = document.getElementById("play-button");
-        var closeVideoButton = document.getElementById("close-video");
-        var backToAnnouncementButton = document.getElementById("back-to-announcement");
+        var isPlaying = false;
 
-        // Fonction pour démarrer ou mettre en pause la musique
-        function startPauseMusic() {
-            if (music.paused) {
-                music.play().catch(error => {
-                    console.log("Erreur de lecture de la musique:", error);
-                });
-            } else {
-                music.pause();
-            }
-        }
-
-        // Fonction pour démarrer l'annonce
         function startAnnouncement() {
             document.getElementById("intro-container").style.display = "none";
             document.getElementById("announcement-container").style.display = "block";
             var announcementText = document.getElementById("announcement-text");
-            announcementText.style.animation = "fadeIn 2s forwards";
-            backToAnnouncementButton.style.display = "block";
+            announcementText.style.display = "block";
+
+            music.play().catch(error => {
+                console.log("Erreur de lecture de la musique:", error);
+            });
+            isPlaying = true;
+            pausePlayButton.textContent = "Pause";
+
+            // Afficher le bouton de pause/play immédiatement
+            pausePlayButton.style.display = "block";
+
+            // Afficher le bouton vidéo après 10 secondes
+            setTimeout(function() {
+                boutonVideo.style.display = "block"; // Affiche le bouton de vidéo
+                boutonVideo.style.opacity = 1; // Assure que l'opacité est 1 après l'animation
+            }, 10000); // 10 secondes de délai
         }
 
-        // Afficher la vidéo en plein écran
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                pausePlayButton.textContent = "Play";
+            } else {
+                music.play().catch(error => {
+                    console.log("Erreur de lecture de la musique:", error);
+                });
+                pausePlayButton.textContent = "Pause";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Fonction pour afficher la vidéo en plein écran
         function showFullScreenVideo() {
-            var video = document.getElementById("background-video");
-            video.style.position = "absolute";
-            video.style.top = "0";
-            video.style.left = "0";
-            video.style.width = "100%";
-            video.style.height = "100%";
-            video.style.zIndex = "999";
-            closeVideoButton.style.display = "block";
-            backToAnnouncementButton.style.display = "none";
-        }
-
-        // Fermer la vidéo en plein écran
-        function closeVideo() {
-            var video = document.getElementById("background-video");
-            video.style.position = "fixed";
-            video.style.top = "0";
-            video.style.left = "0";
-            video.style.width = "100%";
-            video.style.height = "100%";
-            video.style.zIndex = "-1";
-            closeVideoButton.style.display = "none";
-            backToAnnouncementButton.style.display = "block";
-        }
-
-        // Retour à l'annonce
-        function backToAnnouncement() {
-            document.getElementById("announcement-container").style.display = "none";
-            document.getElementById("intro-container").style.display = "block";
+            var videoElement = document.getElementById("announcement-video");
+            videoElement.style.display = "block"; // Affiche la vidéo
+            if (videoElement.requestFullscreen) {
+                videoElement.requestFullscreen();
+            } else if (videoElement.mozRequestFullScreen) { // Firefox
+                videoElement.mozRequestFullScreen();
+            } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                videoElement.webkitRequestFullscreen();
+            } else if (videoElement.msRequestFullscreen) { // IE/Edge
+                videoElement.msRequestFullscreen();
+            }
         }
     </script>
+
 </body>
 </html>
