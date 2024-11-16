@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annonce Lechevallier Durocher</title>
-      <link rel="icon" href="assets/logo.png" type="image/png">
+      <link rel="icon" href="assets/logo.ico" type="image/x-icon">
+
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
     <style>
         body {
@@ -225,7 +226,7 @@
                 console.log("Erreur de lecture de la musique:", error);
             });
             isPlaying = true;
-            pausePlayButton.textContent = "Pause";
+            pausePlayButton.textContent = "Pause ⏯️";
 
             // Afficher le bouton de pause/play immédiatement
             pausePlayButton.style.display = "block";
@@ -240,12 +241,12 @@
         function toggleMusic() {
             if (isPlaying) {
                 music.pause();
-                pausePlayButton.textContent = "Play";
+                pausePlayButton.textContent = "Play ⏯️";
             } else {
                 music.play().catch(error => {
                     console.log("Erreur de lecture de la musique:", error);
                 });
-                pausePlayButton.textContent = "Pause";
+                pausePlayButton.textContent = "Pause ⏯️";
             }
             isPlaying = !isPlaying;
         }
