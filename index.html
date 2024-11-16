@@ -130,6 +130,21 @@
             display: none; /* Initialement cachée */
         }
 
+        /* Bouton Retour à l'annonce */
+        #back-to-announcement {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            z-index: 2;
+            display: none; /* Initialement caché */
+        }
+
         /* Media Queries pour mobile */
         @media screen and (max-width: 768px) {
             #announcement-text, #intro-text {
@@ -201,11 +216,15 @@
     <!-- Bouton de fermeture -->
     <div id="close-video" onclick="closeVideo()">×</div>
 
+    <!-- Bouton pour revenir à l'annonce -->
+    <button id="back-to-announcement" onclick="backToAnnouncement()">Retour à l'annonce</button>
+
     <script>
         var music = document.getElementById("background-music");
         var boutonVideo = document.getElementById("bouton-video");
         var playButton = document.getElementById("play-button");
         var closeVideoButton = document.getElementById("close-video");
+        var backToAnnouncementButton = document.getElementById("back-to-announcement");
 
         // Fonction pour démarrer ou mettre en pause la musique
         function startPauseMusic() {
@@ -223,60 +242,41 @@
             document.getElementById("intro-container").style.display = "none";
             document.getElementById("announcement-container").style.display = "block";
             var announcementText = document.getElementById("announcement-text");
-            announcementText.style.display = "block";
-
-            // Lancer la musique de fond si elle n'est pas déjà jouée
-            if (music.paused) {
-                music.play().catch(error => {
-                    console.log("Erreur de lecture de la musique:", error);
-                });
-            }
-
-            // Afficher les boutons après 10 secondes
-            setTimeout(function() {
-                boutonVideo.style.display = "block"; 
-                boutonVideo.style.opacity = 1;
-
-                playButton.style.display = "block"; 
-                playButton.style.opacity = 1;
-            }, 10000); // 10 secondes de délai
+            announcementText.style.animation = "fadeIn 2s forwards";
+            backToAnnouncementButton.style.display = "block";
         }
 
-        // Fonction pour afficher la vidéo en plein écran
+        // Afficher la vidéo en plein écran
         function showFullScreenVideo() {
-            var videoElement = document.createElement("video");
-            videoElement.src = "assets/Video_Robin.mp4";
-            videoElement.autoplay = true;
-            videoElement.controls = true;
-            videoElement.style.position = "fixed";
-            videoElement.style.top = "0";
-            videoElement.style.left = "0";
-            videoElement.style.width = "100%";
-            videoElement.style.height = "100%";
-            videoElement.style.zIndex = "1000";
-            videoElement.style.objectFit = "cover";
-
-            document.body.appendChild(videoElement);
-            closeVideoButton.style.display = "block"; // Afficher la croix
-
-            boutonVideo.style.display = "none"; // Cacher le bouton vidéo
+            var video = document.getElementById("background-video");
+            video.style.position = "absolute";
+            video.style.top = "0";
+            video.style.left = "0";
+            video.style.width = "100%";
+            video.style.height = "100%";
+            video.style.zIndex = "999";
+            closeVideoButton.style.display = "block";
+            backToAnnouncementButton.style.display = "none";
         }
 
-        // Fonction pour fermer la vidéo
+        // Fermer la vidéo en plein écran
         function closeVideo() {
-            var videoElement = document.querySelector("video");
-            if (videoElement) {
-                document.body.removeChild(videoElement); // Retirer la vidéo
-                closeVideoButton.style.display = "none"; // Cacher la croix
-                boutonVideo.style.display = "block"; // Réafficher le bouton vidéo
-            }
+            var video = document.getElementById("background-video");
+            video.style.position = "fixed";
+            video.style.top = "0";
+            video.style.left = "0";
+            video.style.width = "100%";
+            video.style.height = "100%";
+            video.style.zIndex = "-1";
+            closeVideoButton.style.display = "none";
+            backToAnnouncementButton.style.display = "block";
         }
 
-        // Afficher le texte d'annonce lorsque la page est chargée
-        window.onload = function() {
-            setTimeout(startAnnouncement, 3000); // Commence après 3 secondes
-        };
+        // Retour à l'annonce
+        function backToAnnouncement() {
+            document.getElementById("announcement-container").style.display = "none";
+            document.getElementById("intro-container").style.display = "block";
+        }
     </script>
-
 </body>
 </html>
